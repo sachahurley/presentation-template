@@ -1,63 +1,120 @@
+import Link from "next/link";
 import Image from "next/image";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { decks, getDeckWithImage } from "@/config/decks";
 
 export default function Home() {
+  // Sort decks by creation date, newest first and ensure they have images
+  const sortedDecks = [...decks]
+    .map(deck => getDeckWithImage(deck))
+    .sort((a, b) => {
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    });
+
+  // Format date for display (e.g., "Dec 20, 2024")
+  const formatDate = (date: Date): string => {
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-background">
+      {/* Header with theme toggle */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
+        <div className="flex h-16 items-center justify-between px-4">
+          <h1 className="text-xl font-semibold">Presentations</h1>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/design-system"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Design System
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* Main content */}
+      <main className="pt-16">
+        <div className="container mx-auto px-4 py-12">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold mb-2">All Decks</h2>
+            <p className="text-muted-foreground">
+              Select a deck to view or create a new presentation
+            </p>
+          </div>
+
+        {/* Deck grid */}
+        {sortedDecks.length === 0 ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>No decks yet</CardTitle>
+              <CardDescription>
+                Create your first deck by adding it to the config/decks.ts file
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {sortedDecks.map((deck) => {
+              // Ensure we have an imageUrl for this deck
+              const deckWithImage = getDeckWithImage(deck);
+              const hasDataUrl = deckWithImage.imageUrl?.startsWith('data:');
+              
+              return (
+                <Link key={deck.slug} href={`/decks/${deck.slug}`}>
+                  <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer flex flex-col">
+                    {/* Image container - shows image if available, placeholder if not */}
+                    <div className="px-6">
+                      <div className="relative w-full h-48 flex items-center justify-center overflow-hidden rounded-xl bg-muted">
+                        {deckWithImage.imageUrl ? (
+                          // Use background-image for data URLs (SVG gradients) or Image component for regular URLs
+                          hasDataUrl ? (
+                            <div
+                              className="absolute inset-0 w-full h-full rounded-xl"
+                              style={{
+                                backgroundImage: `url(${deckWithImage.imageUrl})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                              }}
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <Image
+                              src={deckWithImage.imageUrl}
+                              alt={`${deck.title} preview`}
+                              fill
+                              className="object-cover rounded-xl"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                          )
+                        ) : (
+                          <div className="absolute inset-0 w-full h-full bg-muted/50 flex items-center justify-center rounded-xl">
+                            <span className="text-xs text-muted-foreground">No image</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  <CardHeader>
+                    <CardTitle>{deck.title}</CardTitle>
+                    <CardDescription>{deck.description}</CardDescription>
+                  </CardHeader>
+                  <CardFooter className="mt-auto border-t pt-4">
+                    <span className="text-xs text-muted-foreground">
+                      Created {formatDate(deckWithImage.createdAt)}
+                    </span>
+                  </CardFooter>
+                </Card>
+              </Link>
+            );
+            })}
+          </div>
+        )}
         </div>
       </main>
     </div>
