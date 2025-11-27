@@ -1,12 +1,20 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getDeckBySlug } from "@/config/decks";
+import { getDeckBySlug, decks } from "@/config/decks";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { DeckLayout } from "@/components/templates/DeckLayout";
 import { ChevronLeft } from "lucide-react";
 
 interface DeckPageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Generate static params for all decks at build time
+// This is required for static export (GitHub Pages)
+export async function generateStaticParams() {
+  return decks.map((deck) => ({
+    slug: deck.slug,
+  }));
 }
 
 export default async function DeckPage({ params }: DeckPageProps) {
