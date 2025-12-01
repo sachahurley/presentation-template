@@ -5,4 +5,6 @@ export { BulletListSlide } from "./BulletListSlide";
 export { ImageSlide } from "./ImageSlide";
 export { QuoteSlide } from "./QuoteSlide";
 export { BlankSlide } from "./BlankSlide";
+export { ThreeColumnSlide } from "./ThreeColumnSlide";
+export { TwoColumnSlide } from "./TwoColumnSlide";
 

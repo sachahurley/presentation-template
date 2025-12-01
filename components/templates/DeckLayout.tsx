@@ -13,6 +13,8 @@ import { BulletListSlide } from "./slides/BulletListSlide";
 import { QuoteSlide } from "./slides/QuoteSlide";
 import { ImageSlide } from "./slides/ImageSlide";
 import { BlankSlide } from "./slides/BlankSlide";
+import { ThreeColumnSlide } from "./slides/ThreeColumnSlide";
+import { TwoColumnSlide } from "./slides/TwoColumnSlide";
 
 interface DeckLayoutProps {
   deck: Deck;
@@ -180,6 +182,21 @@ export function DeckLayout({ deck }: DeckLayoutProps) {
         );
       case "blank":
         return <BlankSlide>{slide.children}</BlankSlide>;
+      case "threeColumn":
+        return (
+          <ThreeColumnSlide
+            title={slide.title}
+            columns={slide.columns || []}
+          />
+        );
+      case "twoColumn":
+        return (
+          <TwoColumnSlide
+            title={slide.title}
+            columns={slide.columns || []}
+            showBottomBar={slide.showBottomBar !== false}
+          />
+        );
       default:
         return null;
     }

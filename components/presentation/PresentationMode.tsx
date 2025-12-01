@@ -9,10 +9,12 @@ import { BulletListSlide } from "@/components/templates/slides/BulletListSlide";
 import { ImageSlide } from "@/components/templates/slides/ImageSlide";
 import { QuoteSlide } from "@/components/templates/slides/QuoteSlide";
 import { BlankSlide } from "@/components/templates/slides/BlankSlide";
+import { ThreeColumnSlide } from "@/components/templates/slides/ThreeColumnSlide";
+import { TwoColumnSlide } from "@/components/templates/slides/TwoColumnSlide";
 
 export interface PresentationSlide {
   id: number;
-  type: "title" | "headline" | "section" | "bulletList" | "image" | "quote" | "blank";
+  type: "title" | "headline" | "section" | "bulletList" | "image" | "quote" | "blank" | "threeColumn" | "twoColumn";
   title?: string;
   subtitle?: string;
   headline?: string;
@@ -25,6 +27,8 @@ export interface PresentationSlide {
   attribution?: string;
   backgroundImage?: string; // Optional background image URL (data URL or regular URL)
   children?: React.ReactNode;
+  columns?: Array<{ heading: string; body?: string; bullets?: string[] }>; // For threeColumn and twoColumn slide types
+  showBottomBar?: boolean; // For twoColumn slide type to control bottom bar visibility
 }
 
 interface PresentationModeProps {
@@ -193,6 +197,21 @@ export function PresentationMode({ slides, onExit, initialSlideIndex = 0 }: Pres
         );
       case "blank":
         return <BlankSlide>{currentSlide.children}</BlankSlide>;
+      case "threeColumn":
+        return (
+          <ThreeColumnSlide
+            title={currentSlide.title}
+            columns={currentSlide.columns || []}
+          />
+        );
+      case "twoColumn":
+        return (
+          <TwoColumnSlide
+            title={currentSlide.title}
+            columns={currentSlide.columns || []}
+            showBottomBar={currentSlide.showBottomBar !== false}
+          />
+        );
       default:
         return null;
     }
