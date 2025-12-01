@@ -15,6 +15,8 @@ import { ImageSlide } from "./slides/ImageSlide";
 import { BlankSlide } from "./slides/BlankSlide";
 import { ThreeColumnSlide } from "./slides/ThreeColumnSlide";
 import { TwoColumnSlide } from "./slides/TwoColumnSlide";
+import { TimelineSlide } from "./slides/TimelineSlide";
+import { IconListSlide } from "./slides/IconListSlide";
 
 interface DeckLayoutProps {
   deck: Deck;
@@ -195,6 +197,21 @@ export function DeckLayout({ deck }: DeckLayoutProps) {
             title={slide.title}
             columns={slide.columns || []}
             showBottomBar={slide.showBottomBar !== false}
+          />
+        );
+      case "timeline":
+        return (
+          <TimelineSlide
+            title={slide.title}
+            items={slide.timelineItems || []}
+            timeIndicator={slide.timeIndicator}
+          />
+        );
+      case "iconList":
+        return (
+          <IconListSlide
+            title={slide.title}
+            items={slide.iconItems || []}
           />
         );
       default:

@@ -7,4 +7,6 @@ export { QuoteSlide } from "./QuoteSlide";
 export { BlankSlide } from "./BlankSlide";
 export { ThreeColumnSlide } from "./ThreeColumnSlide";
 export { TwoColumnSlide } from "./TwoColumnSlide";
+export { TimelineSlide } from "./TimelineSlide";
+export { IconListSlide } from "./IconListSlide";
 

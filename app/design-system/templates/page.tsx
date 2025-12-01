@@ -9,6 +9,9 @@ import { SectionSlide } from "@/components/templates/slides/SectionSlide";
 import { BulletListSlide } from "@/components/templates/slides/BulletListSlide";
 import { QuoteSlide } from "@/components/templates/slides/QuoteSlide";
 import { BlankSlide } from "@/components/templates/slides/BlankSlide";
+import { ImageSlide } from "@/components/templates/slides/ImageSlide";
+import { ThreeColumnSlide } from "@/components/templates/slides/ThreeColumnSlide";
+import { TwoColumnSlide } from "@/components/templates/slides/TwoColumnSlide";
 
 export default function TemplatesPage() {
   return (
@@ -191,6 +194,120 @@ export default function TemplatesPage() {
                     <div className="mt-4 p-4 bg-muted rounded-md">
                       <p className="text-sm font-mono text-xs">
                         {`<BlankSlide>{/* Your content */}</BlankSlide>`}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Image Slide */}
+              <div id="image-slide" className="scroll-mt-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Image Slide</CardTitle>
+                    <CardDescription>
+                      Display an image with optional title and caption. Great for visual content.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="border border-border rounded-lg p-4 bg-muted/50" style={{ aspectRatio: "16/9", minHeight: "300px" }}>
+                      <ImageSlide
+                        src="/next.svg"
+                        alt="Example image"
+                        title="Example Image"
+                        caption="This is an example caption"
+                      />
+                    </div>
+                    <div className="mt-4 p-4 bg-muted rounded-md">
+                      <p className="text-sm font-mono text-xs">
+                        {`<ImageSlide src="/image.jpg" alt="Description" title="Optional title" caption="Optional caption" />`}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Three Column Slide */}
+              <div id="three-column-slide" className="scroll-mt-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Three Column Slide</CardTitle>
+                    <CardDescription>
+                      Three side-by-side card columns with headings and bullet points. Includes optional title and bottom bar.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="border border-border rounded-lg p-4 bg-muted/50" style={{ aspectRatio: "16/9", minHeight: "300px" }}>
+                      <ThreeColumnSlide
+                        title="Example Title"
+                        columns={[
+                          {
+                            heading: "Column 1",
+                            bullets: ["First point", "Second point"],
+                          },
+                          {
+                            heading: "Column 2",
+                            bullets: ["First point", "Second point"],
+                          },
+                          {
+                            heading: "Column 3",
+                            bullets: ["First point", "Second point"],
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div className="mt-4 p-4 bg-muted rounded-md">
+                      <p className="text-sm font-mono text-xs">
+                        {`<ThreeColumnSlide
+  title="Optional Title"
+  columns={[
+    { heading: "Column 1", bullets: ["Point 1", "Point 2"] },
+    { heading: "Column 2", bullets: ["Point 1", "Point 2"] },
+    { heading: "Column 3", bullets: ["Point 1", "Point 2"] }
+  ]}
+/>`}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Two Column Slide */}
+              <div id="two-column-slide" className="scroll-mt-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Two Column Slide</CardTitle>
+                    <CardDescription>
+                      Two side-by-side card columns. Automatically detects comparison mode (matching bullet counts) and renders with visual connectors. Includes optional title and bottom bar.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="border border-border rounded-lg p-4 bg-muted/50" style={{ aspectRatio: "16/9", minHeight: "300px" }}>
+                      <TwoColumnSlide
+                        title="Comparison Example"
+                        showBottomBar={false}
+                        columns={[
+                          {
+                            heading: "Old Way",
+                            bullets: ["Traditional approach", "Old method"],
+                          },
+                          {
+                            heading: "New Way",
+                            bullets: ["Modern approach", "New method"],
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div className="mt-4 p-4 bg-muted rounded-md">
+                      <p className="text-sm font-mono text-xs">
+                        {`<TwoColumnSlide
+  title="Optional Title"
+  showBottomBar={false}
+  columns={[
+    { heading: "Column 1", bullets: ["Point 1", "Point 2"] },
+    { heading: "Column 2", bullets: ["Point 1", "Point 2"] }
+  ]}
+/>`}
                       </p>
                     </div>
                   </CardContent>

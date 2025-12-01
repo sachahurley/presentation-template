@@ -1,5 +1,15 @@
 import { PresentationSlide } from "@/components/presentation/PresentationMode";
-import { getDeckBackgroundImage } from "@/lib/gradient-generator";
+import { 
+  Figma, 
+  Layout, 
+  Palette, 
+  Zap, 
+  Code, 
+  TestTube,
+  FileCode,
+  Play,
+  Sparkles
+} from "lucide-react";
 
 // Example deck slides (fallback content)
 const exampleDeckSlides: PresentationSlide[] = [
@@ -8,7 +18,7 @@ const exampleDeckSlides: PresentationSlide[] = [
     type: "title",
     title: "Example Deck",
     subtitle: "A sample presentation deck to demonstrate the system",
-    backgroundImage: getDeckBackgroundImage("example-deck"),
+    // backgroundImage will be auto-generated theme-aware by TitleSlide component
   },
   {
     id: 2,
@@ -46,7 +56,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     type: "title",
     title: "AI Assisted Design Process",
     subtitle: "How to augment your process with LLMs",
-    backgroundImage: getDeckBackgroundImage("cursor-llms-product-designer"),
+    // backgroundImage will be auto-generated theme-aware by TitleSlide component
   },
   {
     id: 2,
@@ -62,12 +72,21 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
   },
   {
     id: 3,
-    type: "bulletList",
+    type: "iconList",
     title: "The Philosophy",
-    items: [
-      "Code first. You need to be working in the material of the end user.",
-      "Always demo. This means that you're always creating an artifact that generates alignment and can generate a stronger opinion.",
-      "High fidelity. Build in production-quality environments from day one. Constraints reveal design opportunities.",
+    iconItems: [
+      {
+        text: "Code first. You need to be working in the material of the end user.",
+        icon: FileCode,
+      },
+      {
+        text: "Always demo. This means that you're always creating an artifact that generates alignment and can generate a stronger opinion.",
+        icon: Play,
+      },
+      {
+        text: "High fidelity. Build in production-quality environments from day one. Constraints reveal design opportunities.",
+        icon: Sparkles,
+      },
     ],
   },
   {
@@ -292,15 +311,8 @@ const deckContentMap: Record<string, PresentationSlide[]> = {
 export function getDeckContent(slug: string): PresentationSlide[] {
   const slides = deckContentMap[slug] || [];
   
-  // Ensure title slides have background images (auto-generate if missing)
-  return slides.map((slide) => {
-    if (slide.type === "title" && !slide.backgroundImage) {
-      return {
-        ...slide,
-        backgroundImage: getDeckBackgroundImage(slug),
-      };
-    }
-    return slide;
-  });
+  // Title slides will auto-generate theme-aware backgrounds in the TitleSlide component
+  // No need to pre-generate here since theme detection happens client-side
+  return slides;
 }
 

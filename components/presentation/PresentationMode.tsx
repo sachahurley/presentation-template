@@ -11,10 +11,13 @@ import { QuoteSlide } from "@/components/templates/slides/QuoteSlide";
 import { BlankSlide } from "@/components/templates/slides/BlankSlide";
 import { ThreeColumnSlide } from "@/components/templates/slides/ThreeColumnSlide";
 import { TwoColumnSlide } from "@/components/templates/slides/TwoColumnSlide";
+import { TimelineSlide } from "@/components/templates/slides/TimelineSlide";
+import { IconListSlide } from "@/components/templates/slides/IconListSlide";
+import { LucideIcon } from "lucide-react";
 
 export interface PresentationSlide {
   id: number;
-  type: "title" | "headline" | "section" | "bulletList" | "image" | "quote" | "blank" | "threeColumn" | "twoColumn";
+  type: "title" | "headline" | "section" | "bulletList" | "image" | "quote" | "blank" | "threeColumn" | "twoColumn" | "timeline" | "iconList";
   title?: string;
   subtitle?: string;
   headline?: string;
@@ -29,6 +32,9 @@ export interface PresentationSlide {
   children?: React.ReactNode;
   columns?: Array<{ heading: string; body?: string; bullets?: string[] }>; // For threeColumn and twoColumn slide types
   showBottomBar?: boolean; // For twoColumn slide type to control bottom bar visibility
+  timelineItems?: Array<{ label: string; icon?: LucideIcon; description?: string }>; // For timeline slide type
+  timeIndicator?: string; // For timeline slide type
+  iconItems?: Array<{ text: string; icon?: LucideIcon }>; // For iconList slide type
 }
 
 interface PresentationModeProps {
@@ -210,6 +216,21 @@ export function PresentationMode({ slides, onExit, initialSlideIndex = 0 }: Pres
             title={currentSlide.title}
             columns={currentSlide.columns || []}
             showBottomBar={currentSlide.showBottomBar !== false}
+          />
+        );
+      case "timeline":
+        return (
+          <TimelineSlide
+            title={currentSlide.title}
+            items={currentSlide.timelineItems || []}
+            timeIndicator={currentSlide.timeIndicator}
+          />
+        );
+      case "iconList":
+        return (
+          <IconListSlide
+            title={currentSlide.title}
+            items={currentSlide.iconItems || []}
           />
         );
       default:

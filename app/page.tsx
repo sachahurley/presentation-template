@@ -1,16 +1,14 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { decks, getDeckWithImage } from "@/config/decks";
+import { decks } from "@/config/decks";
+import { DeckThumbnailGradient } from "@/components/deck/DeckThumbnailGradient";
 
 export default function Home() {
-  // Sort decks by creation date, newest first and ensure they have images
-  const sortedDecks = [...decks]
-    .map(deck => getDeckWithImage(deck))
-    .sort((a, b) => {
-      return b.createdAt.getTime() - a.createdAt.getTime();
-    });
+  // Sort decks by creation date, newest first
+  const sortedDecks = [...decks].sort((a, b) => {
+    return b.createdAt.getTime() - a.createdAt.getTime();
+  });
 
   // Format date for display (e.g., "Dec 20, 2024")
   const formatDate = (date: Date): string => {
@@ -61,43 +59,14 @@ export default function Home() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {sortedDecks.map((deck) => {
-              // Ensure we have an imageUrl for this deck
-              const deckWithImage = getDeckWithImage(deck);
-              const hasDataUrl = deckWithImage.imageUrl?.startsWith('data:');
-              
               return (
                 <Link key={deck.slug} href={`/decks/${deck.slug}`}>
                   <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer flex flex-col">
-                    {/* Image container - shows image if available, placeholder if not */}
+                    {/* Thumbnail container - uses same gradient as title slide */}
                     <div className="px-6">
                       <div className="relative w-full h-48 flex items-center justify-center overflow-hidden rounded-xl bg-muted">
-                        {deckWithImage.imageUrl ? (
-                          // Use background-image for data URLs (SVG gradients) or Image component for regular URLs
-                          hasDataUrl ? (
-                            <div
-                              className="absolute inset-0 w-full h-full rounded-xl"
-                              style={{
-                                backgroundImage: `url(${deckWithImage.imageUrl})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                              }}
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <Image
-                              src={deckWithImage.imageUrl}
-                              alt={`${deck.title} preview`}
-                              fill
-                              className="object-cover rounded-xl"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                          )
-                        ) : (
-                          <div className="absolute inset-0 w-full h-full bg-muted/50 flex items-center justify-center rounded-xl">
-                            <span className="text-xs text-muted-foreground">No image</span>
-                          </div>
-                        )}
+                        {/* Same gradient component used in TitleSlide */}
+                        <DeckThumbnailGradient className="rounded-xl" />
                       </div>
                     </div>
                   <CardHeader>
@@ -106,7 +75,7 @@ export default function Home() {
                   </CardHeader>
                   <CardFooter className="mt-auto border-t pt-4">
                     <span className="text-xs text-muted-foreground">
-                      Created {formatDate(deckWithImage.createdAt)}
+                      Created {formatDate(deck.createdAt)}
                     </span>
                   </CardFooter>
                 </Card>
