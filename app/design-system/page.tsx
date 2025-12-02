@@ -44,8 +44,8 @@ export default function DesignSystemPage() {
 
             {/* Navigation Cards */}
             <div className="grid gap-6 md:grid-cols-3">
-              <Link href="/design-system/foundation">
-                <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">
+              <Link href="/design-system/foundation" className="deck-thumbnail-wrapper block">
+                <Card className="h-full transition-all cursor-pointer flex flex-col bg-card">
                   <CardHeader>
                     <CardTitle>Foundation</CardTitle>
                     <CardDescription>
@@ -55,8 +55,8 @@ export default function DesignSystemPage() {
                 </Card>
               </Link>
 
-              <Link href="/design-system/components">
-                <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">
+              <Link href="/design-system/components" className="deck-thumbnail-wrapper block">
+                <Card className="h-full transition-all cursor-pointer flex flex-col bg-card">
                   <CardHeader>
                     <CardTitle>Components</CardTitle>
                     <CardDescription>
@@ -66,8 +66,8 @@ export default function DesignSystemPage() {
                 </Card>
               </Link>
 
-              <Link href="/design-system/templates">
-                <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">
+              <Link href="/design-system/templates" className="deck-thumbnail-wrapper block">
+                <Card className="h-full transition-all cursor-pointer flex flex-col bg-card">
                   <CardHeader>
                     <CardTitle>Templates</CardTitle>
                     <CardDescription>

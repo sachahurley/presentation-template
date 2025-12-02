@@ -32,6 +32,7 @@ const navItems: NavItem[] = [
     children: [
       { id: "buttons", label: "Buttons", href: "/design-system/components#buttons" },
       { id: "cards", label: "Cards", href: "/design-system/components#cards" },
+      { id: "thumbnail-card", label: "Thumbnail Card", href: "/design-system/components#thumbnail-card" },
     ],
   },
   {
