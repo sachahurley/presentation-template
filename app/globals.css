@@ -47,6 +47,8 @@
   /* Light mode: sky-100 background */
   --background: oklch(0.96 0.02 220);
   --foreground: oklch(0.145 0 0);
+  /* Dot grid pattern for light mode - subtle dark dots */
+  --dot-grid-color: oklch(0.145 0 0 / 0.15);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -76,12 +78,18 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Theme-aware card background colors */
+  --color-red-100: rgb(254, 242, 242); /* red-100 for light mode */
+  --color-blue-100: rgb(219, 234, 254); /* blue-100 for light mode */
+  --color-purple-100: rgb(243, 232, 255); /* purple-100 for light mode */
 }
 
 .dark {
   /* Dark mode: sky-950 background */
   --background: oklch(0.18 0.05 220);
   --foreground: oklch(0.985 0 0);
+  /* Dot grid pattern for dark mode - subtle light dots */
+  --dot-grid-color: oklch(0.985 0 0 / 0.15);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -111,6 +119,10 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  /* Theme-aware card background colors for dark mode */
+  --color-red-100: oklch(0.25 0.05 20); /* darker red tint for dark mode */
+  --color-blue-100: oklch(0.22 0.05 220); /* darker blue tint for dark mode */
+  --color-purple-100: oklch(0.24 0.05 280); /* darker purple tint for dark mode */
 }
 
 @layer base {
@@ -118,7 +130,78 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: var(--background);
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Apply dot grid pattern to elements with bg-background class */
+  /* This ensures the pattern shows on all pages that use bg-background */
+  /* Using background shorthand with multiple layers to ensure it works with Tailwind */
+  .bg-background {
+    background: 
+      radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px),
+      var(--background);
+    background-size: 24px 24px, 100%;
+    background-position: 0 0, 0 0;
+    background-repeat: repeat, no-repeat;
+    transition: background-color 0.3s ease, background-image 0.3s ease;
+  }
+  
+  /* Remove dot pattern from header elements - they should have a solid background */
+  header.bg-background {
+    background: var(--background);
+  }
+  
+  /* Deck thumbnail hover wrapper - creates gradient border matching thumbnail gradient */
+  .deck-thumbnail-wrapper {
+    position: relative;
+    display: block; /* Ensure Link behaves as block for proper hover */
+  }
+  
+  /* Solid color border layer - theme-aware */
+  .deck-thumbnail-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -1px; /* Creates 1px border by extending beyond card */
+    border-radius: var(--radius-xl); /* rounded-xl - matches Card exactly */
+    background: #082f49; /* sky-950 for light mode */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  /* Dark mode: use sky-500 */
+  .dark .deck-thumbnail-wrapper::before {
+    background: #0ea5e9; /* sky-500 for dark mode */
+  }
+  
+  /* Inner mask layer to create the border effect */
+  .deck-thumbnail-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl); /* rounded-xl - matches Card exactly */
+    background: var(--card);
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* Show gradient border when hovering the link wrapper */
+  .deck-thumbnail-wrapper:hover::before {
+    opacity: 1;
+  }
+  
+  /* Ensure card is above both gradient and mask layers */
+  .deck-thumbnail-wrapper [data-slot="card"] {
+    position: relative;
+    z-index: 2;
+    background: var(--card); /* Ensure card background is solid */
+  }
+  
+  /* Hide Card border on hover when gradient border is showing */
+  .deck-thumbnail-wrapper:hover [data-slot="card"] {
+    border-color: transparent;
   }
 }

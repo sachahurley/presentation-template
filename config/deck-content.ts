@@ -8,7 +8,10 @@ import {
   TestTube,
   FileCode,
   Play,
-  Sparkles
+  Sparkles,
+  RefreshCw,
+  Bug,
+  CheckCircle
 } from "lucide-react";
 
 // Example deck slides (fallback content)
@@ -76,15 +79,15 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     title: "The Philosophy",
     iconItems: [
       {
-        text: "Code first. You need to be working in the material of the end user.",
+        text: "Code first|You need to be working in the material of the end user",
         icon: FileCode,
       },
       {
-        text: "Always demo. This means that you're always creating an artifact that generates alignment and can generate a stronger opinion.",
+        text: "Always demo|This means that you're always creating an artifact that generates alignment and can generate a stronger opinion",
         icon: Play,
       },
       {
-        text: "High fidelity. Build in production-quality environments from day one. Constraints reveal design opportunities.",
+        text: "Design System|Build in production-quality environments from day one Constraints reveal design opportunities",
         icon: Sparkles,
       },
     ],
@@ -95,29 +98,33 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     title: "The Mental Model",
     columns: [
       {
-        heading: "Vision Loop (Strategy)",
+        heading: "Vision and Strategy",
+        backgroundColor: "red-100",
         bullets: [
           "Define what you're building and why",
-          "Create your PRD as a conversation with AI",
-          "Refine until the vision is crystal clear",
+          "Create PRD",
+          "Refine until clear",
         ],
       },
       {
-        heading: "Build Loop (Reality)",
+        heading: "Building",
+        backgroundColor: "blue-100",
         bullets: [
-          "Establish patterns, components, color tokens",
-          "Design system first approach",
-          "If you don't have a design system, do it in a lightweight way until it's ready",
-          "Generate working components with pixel-perfect specs",
-          "Test, fix, and verify against PRD",
+          "Set up IDE, GitHub, and project",
+          "Set up design system",
+          "Start lightweight if needed",
+          "Generate components",
+          "Implement flows",
         ],
       },
       {
-        heading: "Iterate Loop (Fidelity)",
+        heading: "Iteration",
+        backgroundColor: "purple-100",
         bullets: [
-          "Fine-tuning and doing the final 20%",
-          "Iterate on visual language until it's exactly right",
-          "Go back and forth between Build and Iterate loops",
+          "Recognize missing components",
+          "Fine-tune details",
+          "Refine visual language",
+          "Cycle between Build and Iterate",
         ],
       },
     ],
@@ -129,30 +136,22 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     columns: [
       {
         heading: "Interview Your AI",
+        backgroundColor: "red-100",
         bullets: [
-          "Share all research and current documentation",
-          "Instead of writing requirements alone, have a conversation",
-          "Ask: 'Here's what I'm thinking... what am I missing?'",
-          "'What technical constraints should I consider?'",
-          "'How should this work across different states?'",
+          "Share research and documentation",
+          "Have a conversation instead of writing alone",
+          "Ask what you're missing",
+          "Consider technical constraints",
         ],
       },
       {
         heading: "PRD as Living Document",
+        backgroundColor: "red-100",
         bullets: [
-          "Captures core concept and user flows",
-          "Documents persistent systems (data, state, currency)",
-          "Includes technical requirements and platform decisions",
-          "Provides phase breakdown for iterative delivery",
-        ],
-      },
-      {
-        heading: "Quick Visual Workflows",
-        bullets: [
-          "Quick generation of UI - 0 to 1 components",
-          "Get a sense of what your PRD is creating",
-          "Do this in a lightweight way",
-          "Use Figma Make, v0, or Lovable",
+          "Capture core concept and flows",
+          "Document systems and state",
+          "Include technical requirements",
+          "Break down into phases",
         ],
       },
     ],
@@ -164,26 +163,31 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     columns: [
       {
         heading: "Set Up Your Project",
+        backgroundColor: "blue-100",
         bullets: [
-          "Get access to your GitHub repository",
-          "Get access to the code files and codebase",
-          "Set up your IDE",
+          "Access GitHub repository",
+          "Set up IDE",
         ],
       },
       {
         heading: "Set Your Design System",
+        backgroundColor: "blue-100",
         bullets: [
-          "Set your design system within the project file",
-          "Set up components as widgets that can be reused throughout the project",
-          "If you change the widget, you're changing all components using that widget",
+          "Set design system in project",
+          "Create reusable component widgets",
+          "Changes propagate to all instances",
         ],
       },
       {
-        heading: "Use Your PRD to Produce Flows",
+        heading: "Quick Visual Workflows",
+        backgroundColor: "blue-100",
         bullets: [
-          "Have Cursor or your IDE agent produce entire flows based on your PRD",
-          "Create a wireframe or quick version of the entire flow",
-          "Example: For a marketplace, set up the complete flow quickly",
+          "Generate UI quickly",
+          "Visualize your PRD",
+          "Focus on structure, not visual perfection",
+          "Implement flows",
+          "Keep it lightweight",
+          "Use v0, Figma Make, or Lovable",
         ],
       },
     ],
@@ -194,28 +198,32 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     title: "Iteration",
     columns: [
       {
-        heading: "Create Examples",
+        heading: "Explore Variations",
+        backgroundColor: "purple-100",
         bullets: [
-          "Use v0 AND Figma Make to generate variations",
-          "Import both into Figma using html.to.design plugin",
-          "Why Both Tools? Different AI models interpret prompts differently",
-          "Creating in both gives you more options and reveals different possibilities",
+          "Use v0 and Figma Make for variations",
+          "Import into Figma with html.to.design",
+          "Different tools reveal different possibilities",
         ],
       },
       {
-        heading: "Generate Cursor Prompts with Figma MCP",
+        heading: "Implement Precisely",
+        backgroundColor: "purple-100",
         bullets: [
-          "Your AI can now see your Figma designs directly",
-          "Include links to specific Figma components",
-          "Specify explicit pixel-perfect replication requirements",
-          "Define target platform specifications (Flutter, Swift, web)",
+          "AI sees your Figma designs directly",
+          "Link to specific components",
+          "Specify pixel-perfect requirements",
+          "Define platform specs",
         ],
       },
       {
-        heading: "Refine to Desired Fidelity",
+        heading: "Refine Details",
+        backgroundColor: "purple-100",
         bullets: [
-          "Now you're in familiar territory—push the design to perfection in Figma",
-          "But you started from working code, not a blank canvas",
+          "Refine design in Figma",
+          "Start from working code, not blank canvas",
+          "Add refined components to design system",
+          "Apply changes holistically",
         ],
       },
     ],
@@ -223,23 +231,35 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
   {
     id: 9,
     type: "bulletList",
-    title: "Quality & Iteration Strategy",
+    title: "Best Practices",
     items: [
       "You'll constantly update your PRD, redesign components at the design system level, and iterate between Figma, code, and PRD",
       "Be prepared for this iterative back and forth as you nail everything down",
       "Critical Testing: Preview builds locally constantly, test component reusability with different content, fix bugs immediately (especially in reusable components)",
-      "Your components will be used again—make them solid now",
+      "Your components will be used again - make them solid now",
     ],
   },
   {
     id: 10,
-    type: "bulletList",
+    type: "iconList",
     title: "Compounding Benefits",
-    items: [
-      "Faster Validation: Get real feedback from working prototypes in days, not months. Stakeholders can actually use what you're proposing.",
-      "Design Systems That Evolve: Every project builds your component library. Document and consolidate components post-project for future reuse.",
-      "Designer as Builder: You're no longer dependent on engineering timelines for exploration. You can answer your own 'what if?' questions.",
-      "Better Handoffs: When you do hand off to engineering, you're giving them working code with clear specs, not just pretty pictures.",
+    iconItems: [
+      {
+        text: "Faster Validation|Get feedback from working prototypes in days, not months",
+        icon: Zap,
+      },
+      {
+        text: "Design Systems That Evolve|Every project builds your component library",
+        icon: Sparkles,
+      },
+      {
+        text: "Designer as Builder|Answer your own 'what if?' questions without waiting for engineering",
+        icon: Code,
+      },
+      {
+        text: "Better Handoffs|Give engineering working code with clear specs",
+        icon: Figma,
+      },
     ],
   },
   {

@@ -76,10 +76,10 @@ export function TwoColumnSlide({ title, columns, showBottomBar = true }: TwoColu
                   {column.bullets.map((bullet, bulletIndex) => (
                     <li
                       key={bulletIndex}
-                      className="text-base md:text-lg text-muted-foreground leading-relaxed flex items-start"
+                      className="text-base md:text-lg text-muted-foreground leading-relaxed flex items-baseline"
                     >
-                      <span className="mr-3 text-primary mt-1">•</span>
-                      <span>{bullet}</span>
+                      <span className="mr-3 text-primary flex-shrink-0">•</span>
+                      <span className="flex-1">{bullet}</span>
                     </li>
                   ))}
                 </ul>

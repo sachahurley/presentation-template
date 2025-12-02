@@ -11,9 +11,9 @@ export function BulletListSlide({ title, items }: BulletListSlideProps) {
       )}
       <ul className="flex-1 flex flex-col justify-center space-y-4">
         {items.map((item, index) => (
-          <li key={index} className="text-xl md:text-2xl flex items-start">
-            <span className="mr-4 text-primary">•</span>
-            <span>{item}</span>
+          <li key={index} className="text-xl md:text-2xl flex items-baseline">
+            <span className="mr-4 text-primary flex-shrink-0">•</span>
+            <span className="flex-1">{item}</span>
           </li>
         ))}
       </ul>

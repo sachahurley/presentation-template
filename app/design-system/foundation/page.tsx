@@ -45,7 +45,7 @@ export default function FoundationPage() {
             {/* Colors */}
             <div id="colors" className="mb-12 scroll-mt-8">
               <h3 className="text-xl font-semibold mb-4">Colors</h3>
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 md:grid-cols-2 mb-8">
                 <Card>
                   <CardHeader>
                     <CardTitle>Light Mode</CardTitle>
@@ -71,6 +71,58 @@ export default function FoundationPage() {
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Sky Color Swatches */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Sky Color Palette</CardTitle>
+                  <CardDescription>Complete sky color scale from 100 to 950</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-100 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-100</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-200 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-200</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-300 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-300</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-400 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-400</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-500 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-500</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-600 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-600</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-700 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-700</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-800 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-800</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-900 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-900</p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-20 w-full rounded-md bg-sky-950 border border-border"></div>
+                      <p className="text-sm text-muted-foreground text-center">sky-950</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Typography */}

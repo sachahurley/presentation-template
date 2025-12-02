@@ -5,9 +5,13 @@ import { decks } from "@/config/decks";
 import { DeckThumbnailGradient } from "@/components/deck/DeckThumbnailGradient";
 
 export default function Home() {
-  // Sort decks by creation date, newest first
+  // Sort decks by most recent date (updatedAt if exists, otherwise createdAt), newest first
   const sortedDecks = [...decks].sort((a, b) => {
-    return b.createdAt.getTime() - a.createdAt.getTime();
+    // Get the most recent date for each deck (updatedAt if it exists, otherwise createdAt)
+    const dateA = a.updatedAt?.getTime() || a.createdAt.getTime();
+    const dateB = b.updatedAt?.getTime() || b.createdAt.getTime();
+    // Sort descending (newest first)
+    return dateB - dateA;
   });
 
   // Format date for display (e.g., "Dec 20, 2024")
@@ -60,8 +64,8 @@ export default function Home() {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {sortedDecks.map((deck) => {
               return (
-                <Link key={deck.slug} href={`/decks/${deck.slug}`}>
-                  <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer flex flex-col">
+                <Link key={deck.slug} href={`/decks/${deck.slug}`} className="deck-thumbnail-wrapper block">
+                  <Card className="h-full transition-all cursor-pointer flex flex-col bg-card">
                     {/* Thumbnail container - uses same gradient as title slide */}
                     <div className="px-6">
                       <div className="relative w-full h-48 flex items-center justify-center overflow-hidden rounded-xl bg-muted">
@@ -75,7 +79,11 @@ export default function Home() {
                   </CardHeader>
                   <CardFooter className="mt-auto border-t pt-4">
                     <span className="text-xs text-muted-foreground">
-                      Created {formatDate(deck.createdAt)}
+                      {deck.updatedAt ? (
+                        <>Updated {formatDate(deck.updatedAt)}</>
+                      ) : (
+                        <>Created {formatDate(deck.createdAt)}</>
+                      )}
                     </span>
                   </CardFooter>
                 </Card>

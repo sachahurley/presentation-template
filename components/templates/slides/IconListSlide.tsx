@@ -26,8 +26,16 @@ export function IconListSlide({ title, items }: IconListSlideProps) {
               </div>
             )}
             {/* Text content */}
-            <div className="flex-1 flex items-center">
-              <span className="text-xl md:text-2xl leading-relaxed">{item.text}</span>
+            <div className="flex-1 flex flex-col">
+              {item.text.includes('|') ? (
+                <span className="text-xl md:text-2xl leading-relaxed">
+                  <span className="font-bold">{item.text.split('|')[0]}</span>
+                  <br />
+                  <span>{item.text.split('|')[1]}</span>
+                </span>
+              ) : (
+                <span className="text-xl md:text-2xl leading-relaxed">{item.text}</span>
+              )}
             </div>
           </li>
         ))}
@@ -35,4 +43,5 @@ export function IconListSlide({ title, items }: IconListSlideProps) {
     </div>
   );
 }
+
 

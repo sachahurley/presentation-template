@@ -30,7 +30,7 @@ export interface PresentationSlide {
   attribution?: string;
   backgroundImage?: string; // Optional background image URL (data URL or regular URL)
   children?: React.ReactNode;
-  columns?: Array<{ heading: string; body?: string; bullets?: string[] }>; // For threeColumn and twoColumn slide types
+  columns?: Array<{ heading: string; body?: string; bullets?: string[]; backgroundColor?: string }>; // For threeColumn and twoColumn slide types
   showBottomBar?: boolean; // For twoColumn slide type to control bottom bar visibility
   timelineItems?: Array<{ label: string; icon?: LucideIcon; description?: string }>; // For timeline slide type
   timeIndicator?: string; // For timeline slide type
