@@ -69,8 +69,12 @@ export default function Home() {
                     {/* Thumbnail container - uses same gradient as title slide */}
                     <div className="px-6">
                       <div className="relative w-full h-48 flex items-center justify-center overflow-hidden rounded-xl bg-muted">
-                        {/* Same gradient component used in TitleSlide */}
-                        <DeckThumbnailGradient className="rounded-xl" />
+                        {/* Example deck uses simple gray placeholder, others use gradient */}
+                        {deck.slug === "example-deck" ? (
+                          <div className="absolute inset-0 bg-muted rounded-xl" />
+                        ) : (
+                          <DeckThumbnailGradient className="rounded-xl" />
+                        )}
                       </div>
                     </div>
                   <CardHeader>

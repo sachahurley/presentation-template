@@ -11,13 +11,14 @@ import { QuoteSlide } from "@/components/templates/slides/QuoteSlide";
 import { BlankSlide } from "@/components/templates/slides/BlankSlide";
 import { ThreeColumnSlide } from "@/components/templates/slides/ThreeColumnSlide";
 import { TwoColumnSlide } from "@/components/templates/slides/TwoColumnSlide";
+import { ComparisonSlide } from "@/components/templates/slides/ComparisonSlide";
 import { TimelineSlide } from "@/components/templates/slides/TimelineSlide";
 import { IconListSlide } from "@/components/templates/slides/IconListSlide";
 import { LucideIcon } from "lucide-react";
 
 export interface PresentationSlide {
   id: number;
-  type: "title" | "headline" | "section" | "bulletList" | "image" | "quote" | "blank" | "threeColumn" | "twoColumn" | "timeline" | "iconList";
+  type: "title" | "headline" | "section" | "bulletList" | "image" | "quote" | "blank" | "threeColumn" | "twoColumn" | "comparison" | "timeline" | "iconList";
   title?: string;
   subtitle?: string;
   headline?: string;
@@ -30,8 +31,8 @@ export interface PresentationSlide {
   attribution?: string;
   backgroundImage?: string; // Optional background image URL (data URL or regular URL)
   children?: React.ReactNode;
-  columns?: Array<{ heading: string; body?: string; bullets?: string[]; backgroundColor?: string }>; // For threeColumn and twoColumn slide types
-  showBottomBar?: boolean; // For twoColumn slide type to control bottom bar visibility
+  columns?: Array<{ heading: string; body?: string; bullets?: string[]; backgroundColor?: string }>; // For threeColumn, twoColumn, and comparison slide types
+  showBottomBar?: boolean; // For comparison slide type to control bottom bar visibility
   timelineItems?: Array<{ label: string; icon?: LucideIcon; description?: string }>; // For timeline slide type
   timeIndicator?: string; // For timeline slide type
   iconItems?: Array<{ text: string; icon?: LucideIcon }>; // For iconList slide type
@@ -213,6 +214,13 @@ export function PresentationMode({ slides, onExit, initialSlideIndex = 0 }: Pres
       case "twoColumn":
         return (
           <TwoColumnSlide
+            title={currentSlide.title}
+            columns={currentSlide.columns || []}
+          />
+        );
+      case "comparison":
+        return (
+          <ComparisonSlide
             title={currentSlide.title}
             columns={currentSlide.columns || []}
             showBottomBar={currentSlide.showBottomBar !== false}

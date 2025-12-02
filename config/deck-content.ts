@@ -264,7 +264,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
   },
   {
     id: 11,
-    type: "twoColumn",
+    type: "comparison",
     title: "Mental Model Recap",
     showBottomBar: false,
     columns: [
@@ -290,15 +290,8 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
   },
   {
     id: 12,
-    type: "bulletList",
-    title: "Getting Started",
-    items: [
-      "Week 1: Pick an IDE - Choose Visual Studio, Cursor, or anti-gravity, and get connected to either your own GitHub or your company codebase.",
-      "Week 2: Choose a Small Feature - Pick something real but contained. A settings screen. A detail view. One complete flow.",
-      "Week 3: Run the Full Loop - Vision → Design → Build. Don't skip steps. Learn the rhythm.",
-      "Week 4: Reflect and Refine - What worked? What felt clunky? Where did the process break down? Adjust your approach.",
-      "Remember: This is a new way of thinking, not just new tools. Give yourself permission to experiment and iterate on the process itself.",
-    ],
+    type: "headline",
+    headline: "Demo",
   },
   {
     id: 13,
@@ -312,6 +305,18 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
       "PRDs as conversations - Living documents, not requirements lockdown",
       "Fidelity from day one - Polish reveals problems early",
       "Loops, not stages - Any loop can restart independently",
+    ],
+  },
+  {
+    id: 14,
+    type: "bulletList",
+    title: "Getting Started",
+    items: [
+      "Week 1: Pick an IDE - Choose Visual Studio, Cursor, or anti-gravity, and get connected to either your own GitHub or your company codebase.",
+      "Week 2: Choose a Small Feature - Pick something real but contained. A settings screen. A detail view. One complete flow.",
+      "Week 3: Run the Full Loop - Vision → Design → Build. Don't skip steps. Learn the rhythm.",
+      "Week 4: Reflect and Refine - What worked? What felt clunky? Where did the process break down? Adjust your approach.",
+      "Remember: This is a new way of thinking, not just new tools. Give yourself permission to experiment and iterate on the process itself.",
     ],
   },
 ];

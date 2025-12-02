@@ -12,6 +12,7 @@ import { BlankSlide } from "@/components/templates/slides/BlankSlide";
 import { ImageSlide } from "@/components/templates/slides/ImageSlide";
 import { ThreeColumnSlide } from "@/components/templates/slides/ThreeColumnSlide";
 import { TwoColumnSlide } from "@/components/templates/slides/TwoColumnSlide";
+import { ComparisonSlide } from "@/components/templates/slides/ComparisonSlide";
 
 export default function TemplatesPage() {
   return (
@@ -272,18 +273,18 @@ export default function TemplatesPage() {
                 </Card>
               </div>
 
-              {/* Two Column Slide */}
-              <div id="two-column-slide" className="scroll-mt-8">
+              {/* Comparison Slide */}
+              <div id="comparison-slide" className="scroll-mt-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Two Column Slide</CardTitle>
+                    <CardTitle>Comparison Slide</CardTitle>
                     <CardDescription>
                       Two side-by-side card columns. Automatically detects comparison mode (matching bullet counts) and renders with visual connectors. Includes optional title and bottom bar.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="border border-border rounded-lg p-4 bg-muted/50" style={{ aspectRatio: "16/9", minHeight: "300px" }}>
-                      <TwoColumnSlide
+                      <ComparisonSlide
                         title="Comparison Example"
                         showBottomBar={false}
                         columns={[
@@ -300,12 +301,54 @@ export default function TemplatesPage() {
                     </div>
                     <div className="mt-4 p-4 bg-muted rounded-md">
                       <p className="text-sm font-mono text-xs">
-                        {`<TwoColumnSlide
+                        {`<ComparisonSlide
   title="Optional Title"
   showBottomBar={false}
   columns={[
     { heading: "Column 1", bullets: ["Point 1", "Point 2"] },
     { heading: "Column 2", bullets: ["Point 1", "Point 2"] }
+  ]}
+/>`}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Two Column Slide */}
+              <div id="two-column-slide" className="scroll-mt-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Two Column Slide</CardTitle>
+                    <CardDescription>
+                      Two side-by-side card columns with headings and bullet points. Similar to Three Column Slide but with two columns. Includes optional title and bottom bar.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="border border-border rounded-lg p-4 bg-muted/50" style={{ aspectRatio: "16/9", minHeight: "300px" }}>
+                      <TwoColumnSlide
+                        title="Example Title"
+                        columns={[
+                          {
+                            heading: "Column 1",
+                            bullets: ["First point", "Second point"],
+                            backgroundColor: "blue-100",
+                          },
+                          {
+                            heading: "Column 2",
+                            bullets: ["First point", "Second point"],
+                            backgroundColor: "purple-100",
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div className="mt-4 p-4 bg-muted rounded-md">
+                      <p className="text-sm font-mono text-xs">
+                        {`<TwoColumnSlide
+  title="Optional Title"
+  columns={[
+    { heading: "Column 1", bullets: ["Point 1", "Point 2"], backgroundColor: "blue-100" },
+    { heading: "Column 2", bullets: ["Point 1", "Point 2"], backgroundColor: "purple-100" }
   ]}
 />`}
                       </p>

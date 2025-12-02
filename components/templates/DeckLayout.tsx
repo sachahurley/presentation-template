@@ -15,6 +15,7 @@ import { ImageSlide } from "./slides/ImageSlide";
 import { BlankSlide } from "./slides/BlankSlide";
 import { ThreeColumnSlide } from "./slides/ThreeColumnSlide";
 import { TwoColumnSlide } from "./slides/TwoColumnSlide";
+import { ComparisonSlide } from "./slides/ComparisonSlide";
 import { TimelineSlide } from "./slides/TimelineSlide";
 import { IconListSlide } from "./slides/IconListSlide";
 
@@ -194,6 +195,13 @@ export function DeckLayout({ deck }: DeckLayoutProps) {
       case "twoColumn":
         return (
           <TwoColumnSlide
+            title={slide.title}
+            columns={slide.columns || []}
+          />
+        );
+      case "comparison":
+        return (
+          <ComparisonSlide
             title={slide.title}
             columns={slide.columns || []}
             showBottomBar={slide.showBottomBar !== false}

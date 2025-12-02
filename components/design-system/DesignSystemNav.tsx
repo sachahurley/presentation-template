@@ -46,6 +46,10 @@ const navItems: NavItem[] = [
       { id: "bullet-list-slide", label: "Bullet List Slide", href: "/design-system/templates#bullet-list-slide" },
       { id: "quote-slide", label: "Quote Slide", href: "/design-system/templates#quote-slide" },
       { id: "blank-slide", label: "Blank Slide", href: "/design-system/templates#blank-slide" },
+      { id: "image-slide", label: "Image Slide", href: "/design-system/templates#image-slide" },
+      { id: "three-column-slide", label: "Three Column Slide", href: "/design-system/templates#three-column-slide" },
+      { id: "comparison-slide", label: "Comparison Slide", href: "/design-system/templates#comparison-slide" },
+      { id: "two-column-slide", label: "Two Column Slide", href: "/design-system/templates#two-column-slide" },
     ],
   },
 ];
