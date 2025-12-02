@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -63,6 +63,7 @@ function NavItemComponent({
   activePath: string;
   level?: number;
 }) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(level === 0);
   const hasChildren = item.children && item.children.length > 0;
   const basePath = activePath.split("#")[0];
@@ -98,14 +99,18 @@ function NavItemComponent({
     <div>
       {hasChildren ? (
         <>
-          <div className="flex items-center">
+          <div 
+            className={cn(
+              "flex items-center rounded-md transition-colors group",
+              "hover:bg-muted",
+              isActive && "bg-muted"
+            )}
+          >
             <Link
               href={item.href || "#"}
               className={cn(
                 "flex-1 flex items-center gap-2 px-3 py-2 rounded-md text-left transition-colors",
-                "hover:bg-muted",
-                level === 0 && "font-semibold",
-                isActive && "bg-muted"
+                level === 0 && "font-semibold"
               )}
               style={{ paddingLeft: `${0.75 + level * 1}rem` }}
             >
@@ -113,7 +118,7 @@ function NavItemComponent({
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="px-2 py-2 rounded-md hover:bg-muted transition-colors"
+              className="px-2 py-2 rounded-md transition-colors flex items-center"
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
               {isOpen ? (
@@ -147,16 +152,30 @@ function NavItemComponent({
           style={{ paddingLeft: `${0.75 + level * 1}rem` }}
           onClick={(e) => {
             if (item.href?.includes("#")) {
-              e.preventDefault();
               const [path, hash] = item.href.split("#");
+              // If we're already on the same page, just scroll to the hash
               if (path === basePath && hash) {
+                e.preventDefault();
                 const element = document.querySelector(`#${hash}`);
                 if (element) {
                   element.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
-              } else {
-                window.location.href = item.href;
+              } else if (hash) {
+                // If we're navigating to a different page with a hash,
+                // use Next.js router to navigate, then scroll to hash after page loads
+                e.preventDefault();
+                router.push(item.href);
+                // Use requestAnimationFrame to wait for DOM update, then scroll
+                requestAnimationFrame(() => {
+                  setTimeout(() => {
+                    const element = document.querySelector(`#${hash}`);
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }, 50);
+                });
               }
+              // If no hash, let Next.js Link handle navigation normally
             }
           }}
         >
