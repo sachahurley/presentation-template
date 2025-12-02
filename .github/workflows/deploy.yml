@@ -1,57 +1,62 @@
 name: Deploy to GitHub Pages
 
+# This workflow runs when code is pushed to the main branch
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
+# Sets permissions for the workflow
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
+      # Step 1: Checkout the repository code
       - name: Checkout
         uses: actions/checkout@v4
       
+      # Step 2: Set up Node.js (using version 20 for compatibility)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
       
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm ci
       
+      # Step 4: Build the Next.js app (creates static export in 'out' directory)
       - name: Build
         run: npm run build
+        env:
+          NODE_ENV: production
       
+      # Step 5: Setup Pages (prepare for deployment)
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        with:
-          enablement: true
       
+      # Step 6: Upload the built files (from 'out' directory) to GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+          path: './out'
+      
+      # Step 7: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
