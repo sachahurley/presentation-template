@@ -67,6 +67,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     title: "The Traditional Process is Breaking",
     items: [
       "Figma → Wireframe → Mockup → Prototype → Handoff → Development → Testing",
+      "Document-heavy process before, during, and after projects",
       "6-12 weeks from concept to working code",
       "We spend weeks perfecting pixels that die in implementation",
       "We debate interactions in static frames",
@@ -75,6 +76,18 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
   },
   {
     id: 3,
+    type: "bulletList",
+    title: "The New Process is Fluid",
+    items: [
+      "Designers return to code as the primary material",
+      "Handoff details are minimal",
+      "Experiment at scale and speed by forking flows and design systems",
+      "Prototypes become rich sandboxes",
+      "Machines excel at volume and data, but need a strong opinion to be truly successful",
+    ],
+  },
+  {
+    id: 4,
     type: "iconList",
     title: "The Philosophy",
     iconItems: [
@@ -93,7 +106,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     type: "threeColumn",
     title: "The Mental Model",
     columns: [
@@ -130,7 +143,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     type: "threeColumn",
     title: "Vision and Strategy",
     columns: [
@@ -157,7 +170,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     type: "threeColumn",
     title: "Building",
     columns: [
@@ -193,7 +206,7 @@ const cursorLLMsDeckSlides: PresentationSlide[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     type: "threeColumn",
     title: "Iteration",
     columns: [
