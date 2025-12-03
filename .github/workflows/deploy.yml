@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Build with Next.js
+      - name: Build
         run: npm run build
         env:
           NODE_ENV: production
@@ -42,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: './out'
 
   deploy:
     environment:
