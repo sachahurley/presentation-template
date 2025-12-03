@@ -28,7 +28,7 @@ const glowVertexShader = `
   }
 `;
 
-// Fragment shader creates a soft glow effect
+// Fragment shader creates a soft glow effect with softer, blurred edges
 const glowFragmentShader = `
   uniform vec3 uGlowColor;
   uniform float uGlowIntensity;
@@ -42,13 +42,28 @@ const glowFragmentShader = `
     // Calculate view direction for fresnel effect
     vec3 viewDirection = normalize(uCameraPosition - vWorldPosition);
     // Use the world normal passed from vertex shader
-    float fresnel = pow(1.0 - max(dot(vWorldNormal, viewDirection), 0.0), 2.0);
+    // Reduced power from 2.0 to 1.2 for softer, more gradual falloff
+    // Lower power = softer transition from center to edge
+    float fresnel = pow(1.0 - max(dot(vWorldNormal, viewDirection), 0.0), 1.2);
     
-    // Create soft glow that's stronger at edges
-    float glow = fresnel * uGlowIntensity;
+    // Create a softer edge glow using smoothstep for ultra-smooth blending
+    // smoothstep creates a smooth S-curve transition, perfect for blurred edges
+    // The range (0.2, 0.8) means the glow starts fading earlier and more gradually
+    float softGlow = smoothstep(0.2, 0.8, fresnel);
     
-    // Very subtle overall glow
-    glow += 0.1 * uGlowIntensity;
+    // Apply additional smoothing for even softer edges
+    // This creates a more gradual falloff at the very outer edge
+    float blurredEdge = smoothstep(0.0, 0.6, fresnel);
+    
+    // Combine both effects for maximum softness
+    // The blurredEdge adds extra softness at the outer perimeter
+    float combinedGlow = mix(softGlow, blurredEdge, 0.3);
+    
+    // Create soft glow that's stronger at edges but with smoother, more blurred falloff
+    float glow = combinedGlow * uGlowIntensity;
+    
+    // Very subtle overall glow for ambient effect
+    glow += 0.05 * uGlowIntensity;
     
     gl_FragColor = vec4(uGlowColor, glow);
   }
@@ -100,9 +115,10 @@ export function GlobeGlow({ size = 1.25, rotationSpeed = 1.0 }: GlobeGlowProps) 
     });
   }, [glowSettings]);
 
-  // Slightly larger sphere for glow
+  // Slightly larger sphere for glow - increased from 5% to 8% for more blur distance
+  // This creates more space for the glow to fade, resulting in a softer, more blurred edge
   const glowGeometry = useMemo(() => {
-    return new THREE.SphereGeometry(size * 1.05, 64, 64); // 5% larger than globe
+    return new THREE.SphereGeometry(size * 1.08, 64, 64); // 8% larger than globe for softer blur
   }, [size]);
 
   // Update camera position and rotate with globe in animation loop

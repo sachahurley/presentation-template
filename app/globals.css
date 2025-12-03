@@ -126,6 +126,16 @@
   --color-purple-100: oklch(0.24 0.05 280); /* darker purple tint for dark mode */
 }
 
+/* Rotating glow trail animation for button border */
+@keyframes rotate-glow-trail {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer utilities {
   /* More subtle shadows for light mode only (when not in dark mode) */
   :root:not(.dark) .shadow-sm {
@@ -226,5 +236,30 @@
   /* Hide Card border on hover when gradient border is showing */
   .deck-thumbnail-wrapper:hover [data-slot="card"] {
     border-color: transparent;
+  }
+  
+  /* Animated glow trail button - rotating gradient inside border */
+  .glow-trail-button {
+    position: relative;
+    overflow: hidden; /* Clip animation to border area */
+  }
+  
+  .glow-trail-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 60px;
+    /* Light mode: very dark sky colors for visibility on light sky-300 background */
+    /* Using sky-900 (rgb(12, 74, 110)) and sky-950 (rgb(8, 47, 73)) with higher opacity */
+    background: conic-gradient(from 0deg, rgba(8, 47, 73, 1) 0deg, rgba(8, 47, 73, 0) 42deg, rgba(8, 47, 73, 0.95) 20deg, rgba(12, 74, 110, 0.8) 35deg, rgba(12, 74, 110, 0.6) 50deg, rgba(12, 74, 110, 0.4) 70deg, rgba(7, 89, 133, 0.25) 90deg, rgba(7, 89, 133, 0.12) 110deg, rgba(3, 105, 161, 0) 130deg, transparent 150deg, transparent 360deg);
+    filter: blur(5px);
+    animation: rotate-glow-trail 4.5s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* Dark mode: lighter sky colors (original) */
+  .dark .glow-trail-button::before {
+    background: conic-gradient(from 0deg, rgba(125, 211, 252, 1) 0deg, rgba(125, 211, 252, 0) 42deg, rgba(125, 211, 252, 0.9) 20deg, rgba(186, 230, 253, 0.56) 35deg, rgba(186, 230, 253, 0.37) 50deg, rgba(186, 230, 253, 0.21) 70deg, rgba(186, 230, 253, 0.14) 90deg, rgba(186, 230, 253, 0.07) 110deg, rgba(186, 230, 253, 0) 130deg, transparent 150deg, transparent 360deg);
   }
 }

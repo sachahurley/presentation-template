@@ -13,6 +13,7 @@ import { getDecksFromLocalStorage } from "@/lib/deck-storage";
 import { Deck } from "@/config/decks";
 import { Edit, Plus } from "lucide-react";
 import { GlobeScene } from "@/components/globe/GlobeScene";
+import { AsciiHeroText } from "@/components/globe/AsciiHeroText";
 
 export default function Home() {
   const [localStorageDecks, setLocalStorageDecks] = useState<Deck[]>([]);
@@ -88,27 +89,21 @@ export default function Home() {
       <main className="pt-16">
         {/* Hero section with animated globe - full viewport height */}
         <section className="relative w-full overflow-hidden min-h-[calc(100vh-4rem)] flex items-center justify-center">
-          <div className="w-full px-4 py-8 md:py-12">
+          <div className="w-full px-4 pt-32 pb-8 md:pt-36 md:pb-12 lg:pt-40">
             <div className="flex flex-col items-center gap-8 md:gap-10">
-              {/* Page title and subtitle */}
-              <div className="flex flex-col items-center gap-4">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal" style={{ fontFamily: "'Caudex', serif", letterSpacing: '0.1em' }}>
-                  Presento
-                </h1>
-                <p className="text-lg md:text-xl text-muted-foreground font-mono text-center">
-                  Create and manage your presentation decks
-                </p>
-              </div>
-              
-              {/* Globe container - centered, 25% larger */}
+              {/* Globe container with ASCII art hero text - centered, 25% larger */}
               <div className="relative w-full max-w-[586px] h-[391px] md:h-[488px] lg:h-[586px]">
+                {/* ASCII art hero text - frames the globe from outside */}
+                <AsciiHeroText />
+                
+                {/* Globe scene */}
                 <GlobeScene size={1.953125} rotationSpeed={1.0} className="w-full h-full" />
+                
                 {/* Overlay button */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <Button
-                    size="xl"
-                    variant="gradient"
-                    className="pointer-events-auto"
+                  {/* Outer container with Sky glow effect - matches Figma design structure */}
+                  <div 
+                    className="glow-trail-button bg-sky-950/60 dark:bg-sky-900/40 box-border content-stretch flex flex-col items-start p-[2px] relative rounded-[60px] shadow-[0px_0px_20px_0px_rgba(8,47,73,0.3)] dark:shadow-[0px_0px_20px_0px_rgba(14,165,233,0.15)] pointer-events-auto"
                     onClick={() => {
                       const allSection = document.getElementById('all-section');
                       if (allSection) {
@@ -116,9 +111,23 @@ export default function Home() {
                       }
                     }}
                   >
-                    <span className="relative z-10">Get Started</span>
-                  </Button>
+                    {/* Inner button - scaled to match current h-14 (56px) size */}
+                    <div className="bg-sky-200 dark:bg-[#130d0e] box-border content-stretch flex gap-[12.99px] h-14 items-center px-6 py-2 relative rounded-[1000px] shrink-0 cursor-pointer transition-all hover:bg-sky-300 dark:hover:bg-[#1a1213] z-10">
+                      <div className="content-stretch flex flex-col items-start relative shrink-0">
+                        <div className="flex flex-col font-medium justify-center leading-[0] not-italic relative shrink-0 text-lg text-nowrap text-sky-950 dark:text-white tracking-[0.2px]">
+                          <p className="leading-[1.2] whitespace-pre">Get Started</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              
+              {/* Subtitle - positioned beneath the globe */}
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-lg md:text-xl text-muted-foreground font-mono text-center">
+                  Create and manage your presentation decks
+                </p>
               </div>
             </div>
           </div>

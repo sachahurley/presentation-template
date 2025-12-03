@@ -55,6 +55,14 @@ const navItems: NavItem[] = [
       { id: "two-column-slide", label: "Two Column Slide", href: "/design-system/templates#two-column-slide" },
     ],
   },
+  {
+    id: "tools",
+    label: "Tools",
+    href: "/design-system/tools",
+    children: [
+      { id: "glow-trail-debug", label: "Glow Trail Debug", href: "/design-system/tools/glow-trail-debug" },
+    ],
+  },
 ];
 
 function NavItemComponent({
