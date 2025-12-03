@@ -1,25 +1,43 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useEffect, useState } from "react";
+import { notFound, useParams } from "next/navigation";
 import Link from "next/link";
 import { getDeckBySlug, decks } from "@/config/decks";
+import { getDeckFromLocalStorage } from "@/lib/deck-storage";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { DeckLayout } from "@/components/templates/DeckLayout";
 import { ChevronLeft } from "lucide-react";
+import { Deck } from "@/config/decks";
 
-interface DeckPageProps {
-  params: Promise<{ slug: string }>;
-}
+export default function DeckPage() {
+  const params = useParams();
+  const slug = params?.slug as string;
+  const [deck, setDeck] = useState<Deck | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-// Generate static params for all decks at build time
-// This is required for static export (GitHub Pages)
-export async function generateStaticParams() {
-  return decks.map((deck) => ({
-    slug: deck.slug,
-  }));
-}
+  useEffect(() => {
+    if (!slug) return;
 
-export default async function DeckPage({ params }: DeckPageProps) {
-  const { slug } = await params;
-  const deck = getDeckBySlug(slug);
+    // Try to get deck from config first
+    let foundDeck = getDeckBySlug(slug);
+
+    // If not found in config, try localStorage
+    if (!foundDeck) {
+      foundDeck = getDeckFromLocalStorage(slug);
+    }
+
+    setDeck(foundDeck || null);
+    setIsLoading(false);
+  }, [slug]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
 
   if (!deck) {
     notFound();
@@ -38,7 +56,7 @@ export default async function DeckPage({ params }: DeckPageProps) {
               <ChevronLeft className="h-5 w-5" />
             </Link>
             <h1 className="text-xl font-semibold">
-              <span className="text-muted-foreground">Presentations</span> / {deck.title}
+              <span className="text-muted-foreground">Presento</span> / {deck.title}
             </h1>
           </div>
           <ThemeToggle />

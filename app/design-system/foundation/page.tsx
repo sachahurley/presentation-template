@@ -18,7 +18,7 @@ export default function FoundationPage() {
               <ChevronLeft className="h-5 w-5" />
             </Link>
             <h1 className="text-xl font-semibold">
-              <span className="text-muted-foreground">Presentations</span> / Design System
+              <span className="text-muted-foreground">Presento</span> / Design System
             </h1>
           </div>
           <ThemeToggle />

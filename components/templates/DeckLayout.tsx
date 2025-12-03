@@ -26,19 +26,42 @@ interface DeckLayoutProps {
 export function DeckLayout({ deck }: DeckLayoutProps) {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isFullscreenMode, setIsFullscreenMode] = useState(false);
+  const [slides, setSlides] = useState<PresentationSlide[]>([]);
 
-  // Get slides from deck content configuration, with fallback to default title slide
-  const deckSlides = getDeckContent(deck.slug);
-  const slides: PresentationSlide[] = deckSlides.length > 0 
-    ? deckSlides 
-    : [
-        {
-          id: 1,
-          type: "title",
-          title: deck.title,
-          subtitle: deck.description,
-        },
-      ];
+  // Load slides from deck content configuration or localStorage
+  useEffect(() => {
+    // Get slides from deck content configuration, with fallback to default title slide
+    const deckSlides = getDeckContent(deck.slug);
+    let loadedSlides: PresentationSlide[] = deckSlides.length > 0 
+      ? deckSlides 
+      : [
+          {
+            id: 1,
+            type: "title",
+            title: deck.title,
+            subtitle: deck.description,
+          },
+        ];
+    
+    // Ensure first slide has backgroundImage from deck's imageUrl if available
+    if (deck.imageUrl && loadedSlides.length > 0) {
+      const firstSlide = loadedSlides[0];
+      if (!firstSlide.backgroundImage || firstSlide.backgroundImage !== deck.imageUrl) {
+        loadedSlides = [
+          {
+            ...firstSlide,
+            type: "title", // Ensure it's a title slide
+            title: firstSlide.title || deck.title,
+            subtitle: firstSlide.subtitle || deck.description,
+            backgroundImage: deck.imageUrl,
+          },
+          ...loadedSlides.slice(1),
+        ];
+      }
+    }
+    
+    setSlides(loadedSlides);
+  }, [deck.slug, deck.title, deck.description, deck.imageUrl]);
 
   const currentSlide = slides[currentSlideIndex];
   const totalSlides = slides.length;
@@ -142,13 +165,16 @@ export function DeckLayout({ deck }: DeckLayoutProps) {
   const renderSlide = (slide: PresentationSlide) => {
     if (!slide) return null;
 
+    // Check if this is the first slide (current slide index is 0)
+    const isFirstSlide = currentSlideIndex === 0;
+
     switch (slide.type) {
       case "title":
         return (
           <TitleSlide
             title={slide.title || ""}
             subtitle={slide.subtitle}
-            backgroundImage={slide.backgroundImage}
+            backgroundImage={slide.backgroundImage || (isFirstSlide && deck.imageUrl ? deck.imageUrl : undefined)}
           />
         );
       case "headline":

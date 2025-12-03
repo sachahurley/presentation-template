@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caudex&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -88,8 +89,8 @@
   /* Dark mode: sky-950 background */
   --background: oklch(0.18 0.05 220);
   --foreground: oklch(0.985 0 0);
-  /* Dot grid pattern for dark mode - subtle light dots */
-  --dot-grid-color: oklch(0.985 0 0 / 0.15);
+  /* Dot grid pattern for dark mode - more subtle light dots */
+  --dot-grid-color: oklch(0.985 0 0 / 0.08);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);

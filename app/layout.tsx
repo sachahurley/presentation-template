@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ToastProvider } from "@/components/ui/toast";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata",
@@ -29,7 +30,9 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem
         >
-          {children}
+          <ToastProvider>
+            {children}
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

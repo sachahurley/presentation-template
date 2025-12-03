@@ -19,17 +19,20 @@ export function TitleSlide({ title, subtitle, backgroundImage }: TitleSlideProps
   }, []);
 
   // If custom background image is provided, use it
-  if (backgroundImage) {
+  // Check for truthy and non-empty string, but data URLs don't need trim check
+  if (backgroundImage && typeof backgroundImage === 'string' && backgroundImage.length > 0) {
     return (
       <div 
         className="h-full flex flex-col items-center justify-center text-center px-8 relative"
         style={{
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url("${backgroundImage}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/20" />
         <div className="relative z-10">
           <h1 className="text-6xl md:text-7xl font-bold mb-6">{title}</h1>
           {subtitle && (

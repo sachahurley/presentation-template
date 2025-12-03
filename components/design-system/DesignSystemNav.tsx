@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface NavItem {
   id: string;
@@ -31,6 +32,8 @@ const navItems: NavItem[] = [
     href: "/design-system/components",
     children: [
       { id: "buttons", label: "Buttons", href: "/design-system/components#buttons" },
+      { id: "inputs", label: "Inputs", href: "/design-system/components#inputs" },
+      { id: "toasts", label: "Toasts", href: "/design-system/components#toasts" },
       { id: "cards", label: "Cards", href: "/design-system/components#cards" },
       { id: "thumbnail-card", label: "Thumbnail Card", href: "/design-system/components#thumbnail-card" },
     ],
@@ -116,9 +119,10 @@ function NavItemComponent({
             >
               <span>{item.label}</span>
             </Link>
-            <button
+            <Button
+              variant="ghost"
+              size="icon-sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="px-2 py-2 rounded-md transition-colors flex items-center"
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
               {isOpen ? (
@@ -126,7 +130,7 @@ function NavItemComponent({
               ) : (
                 <ChevronRight className="h-4 w-4" />
               )}
-            </button>
+            </Button>
           </div>
           {isOpen && (
             <div className="ml-4">

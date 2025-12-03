@@ -342,11 +342,50 @@ const deckContentMap: Record<string, PresentationSlide[]> = {
 
 /**
  * Get slide content for a specific deck by slug
+ * Checks localStorage first, then falls back to config files
  * Automatically adds background images to title slides if they don't have one
  * @param slug - The deck slug identifier
  * @returns Array of PresentationSlide objects, or empty array if deck not found
  */
 export function getDeckContent(slug: string): PresentationSlide[] {
+  // Check localStorage first (client-side only)
+  if (typeof window !== "undefined") {
+    try {
+      // Use require to dynamically import (works in both server and client)
+      const { getDeckContentFromLocalStorage, getDeckFromLocalStorage } = require("@/lib/deck-storage");
+      const localStorageSlides = getDeckContentFromLocalStorage(slug);
+      if (localStorageSlides && localStorageSlides.length > 0) {
+        // Sync backgroundImage from deck's imageUrl if first slide doesn't have it
+        const deck = getDeckFromLocalStorage(slug);
+        if (deck && deck.imageUrl) {
+          const firstSlide = localStorageSlides[0];
+          if (firstSlide && (!firstSlide.backgroundImage || firstSlide.backgroundImage !== deck.imageUrl)) {
+            // Update first slide to have the backgroundImage from deck's imageUrl
+            const updatedSlides = [
+              {
+                ...firstSlide,
+                backgroundImage: deck.imageUrl,
+              },
+              ...localStorageSlides.slice(1),
+            ];
+            // Persist the update to localStorage
+            try {
+              const { saveDeckToLocalStorage } = require("@/lib/deck-storage");
+              saveDeckToLocalStorage(deck, updatedSlides);
+            } catch (error) {
+              // If save fails, still return the updated slides
+            }
+            return updatedSlides;
+          }
+        }
+        return localStorageSlides;
+      }
+    } catch (error) {
+      // Fall through to config file lookup if localStorage check fails
+    }
+  }
+
+  // Fall back to config file content
   const slides = deckContentMap[slug] || [];
   
   // Title slides will auto-generate theme-aware backgrounds in the TitleSlide component
